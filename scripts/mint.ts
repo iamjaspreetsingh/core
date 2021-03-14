@@ -3,15 +3,13 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { MediaFactory } from '../typechain/MediaFactory';
 import Decimal from '../utils/Decimal';
+require('dotenv').config();
 
 async function start() {
   const args = require('minimist')(process.argv.slice(2), {
     string: ['tokenURI', 'metadataURI', 'contentHash', 'metadataHash'],
   });
 
-  if (!args.chainId) {
-    throw new Error('--chainId chain ID is required');
-  }
   if (!args.tokenURI) {
     throw new Error('--tokenURI token URI is required');
   }
@@ -27,14 +25,10 @@ async function start() {
   if (!args.creatorShare && args.creatorShare !== 0) {
     throw new Error('--creatorShare creator share is required');
   }
-  const path = `${process.cwd()}/.env${
-    args.chainId === 1 ? '.prod' : args.chainId === 4 ? '.dev' : '.local'
-  }`;
-  await require('dotenv').config({ path });
   const provider = new JsonRpcProvider(process.env.RPC_ENDPOINT);
   // const wallet = new Wallet(`0x${process.env.PRIVATE_KEY}`, provider);
   const wallet = new Wallet(`0x${process.env.PRIVATE_KEY}`, provider);
-  const sharedAddressPath = `${process.cwd()}/addresses/${args.chainId}.json`;
+  const sharedAddressPath = `${process.cwd()}/addresses/${process.env.CHAIN_ID}.json`;
   // @ts-ignore
   const addressBook = JSON.parse(await fs.readFileSync(sharedAddressPath));
   if (!addressBook.media) {
@@ -66,9 +60,12 @@ async function start() {
   );
 
   console.log(`New piece is minted ☼☽`);
+
+
 }
 
 start().catch((e: Error) => {
   console.error(e);
   process.exit(1);
 });
+

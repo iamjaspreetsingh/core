@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: MIT
 pragma solidity 0.6.8;
 pragma experimental ABIEncoderV2;
 
-import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
+import {SafeMath} from "./openzeppelin/contracts/math/SafeMath.sol";
 
 /**
  * @title Math
@@ -12,7 +13,7 @@ import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
  * 2d8454e02702fe5bc455b848556660629c3cad36. It has not been modified other than to use a
  * newer solidity in the pragma to match the rest of the contract suite of this project.
  */
-library Math {
+library MathOZ {
     using SafeMath for uint256;
 
     // ============ Library Functions ============

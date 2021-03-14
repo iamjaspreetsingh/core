@@ -122,7 +122,7 @@ describe('Media', () => {
     ).deployed();
     auctionAddress = auction.address;
     const token = await (
-      await new MediaFactory(deployerWallet).deploy(auction.address)
+      await new MediaFactory(deployerWallet).deploy(auction.address,"OZ","OZ")
     ).deployed();
     tokenAddress = token.address;
 

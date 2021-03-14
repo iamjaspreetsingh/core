@@ -9,7 +9,7 @@ import Decimal from '../utils/Decimal';
 import { BigNumber, BigNumberish } from 'ethers';
 import { formatUnits } from '@ethersproject/units';
 import { AddressZero, MaxUint256 } from '@ethersproject/constants';
-import { BaseErc20Factory } from '../typechain/BaseErc20Factory';
+import { BaseErc20OzFactory } from '../typechain/BaseErc20OzFactory';
 import { Market } from '../typechain/Market';
 
 chai.use(asPromised);
@@ -104,7 +104,7 @@ describe('Market', () => {
   }
 
   async function deployCurrency() {
-    const currency = await new BaseErc20Factory(deployerWallet).deploy(
+    const currency = await new BaseErc20OzFactory(deployerWallet).deploy(
       'test',
       'TEST',
       18
@@ -113,7 +113,7 @@ describe('Market', () => {
   }
 
   async function mintCurrency(currency: string, to: string, value: number) {
-    await BaseErc20Factory.connect(currency, deployerWallet).mint(to, value);
+    await BaseErc20OzFactory.connect(currency, deployerWallet).mint(to, value);
   }
 
   async function approveCurrency(
@@ -121,13 +121,13 @@ describe('Market', () => {
     spender: string,
     owner: Wallet
   ) {
-    await BaseErc20Factory.connect(currency, owner).approve(
+    await BaseErc20OzFactory.connect(currency, owner).approve(
       spender,
       MaxUint256
     );
   }
   async function getBalance(currency: string, owner: string) {
-    return BaseErc20Factory.connect(currency, deployerWallet).balanceOf(owner);
+    return BaseErc20OzFactory.connect(currency, deployerWallet).balanceOf(owner);
   }
   async function setBid(
     auction: Market,
@@ -458,7 +458,7 @@ describe('Market', () => {
       await approveCurrency(currency, auction.address, bidderWallet);
 
       const bidderBalance = toNumWei(
-        await BaseErc20Factory.connect(currency, bidderWallet).balanceOf(
+        await BaseErc20OzFactory.connect(currency, bidderWallet).balanceOf(
           bidderWallet.address
         )
       );
@@ -473,7 +473,7 @@ describe('Market', () => {
       ).fulfilled;
 
       const afterBalance = toNumWei(
-        await BaseErc20Factory.connect(currency, bidderWallet).balanceOf(
+        await BaseErc20OzFactory.connect(currency, bidderWallet).balanceOf(
           bidderWallet.address
         )
       );

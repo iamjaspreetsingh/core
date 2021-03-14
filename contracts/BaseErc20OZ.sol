@@ -1,19 +1,20 @@
+// SPDX-License-Identifier: MIT
 pragma solidity 0.6.8;
 
 /**
  * NOTE: This contract only exists to serve as a testing utility. It is not recommended to be used outside of a testing environment
  */
 
-import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {SafeMath} from "./openzeppelin/contracts/math/SafeMath.sol";
+import {IERC20} from "./openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {Ownable} from "./openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title ERC20 Token
  *
  * Basic ERC20 Implementation
  */
-contract BaseERC20 is IERC20, Ownable {
+contract BaseERC20OZ is IERC20, Ownable {
     using SafeMath for uint256;
 
     // ============ Variables ============

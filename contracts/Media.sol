@@ -2,16 +2,16 @@
 pragma solidity 0.6.8;
 pragma experimental ABIEncoderV2;
 
-import {ERC721Burnable} from "./ERC721Burnable.sol";
-import {ERC721} from "./ERC721.sol";
-import {EnumerableSet} from "@openzeppelin/contracts/utils/EnumerableSet.sol";
-import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
-import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
-import {Math} from "@openzeppelin/contracts/math/Math.sol";
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {ERC721BurnableOZ} from "./ERC721BurnableOZ.sol";
+import {ERC721OZ} from "./ERC721OZ.sol";
+import {EnumerableSet} from "./openzeppelin/contracts/utils/EnumerableSet.sol";
+import {Counters} from "./openzeppelin/contracts/utils/Counters.sol";
+import {SafeMath} from "./openzeppelin/contracts/math/SafeMath.sol";
+import {Math} from "./openzeppelin/contracts/math/Math.sol";
+import {IERC20} from "./openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {
     ReentrancyGuard
-} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+} from "./openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {Decimal} from "./Decimal.sol";
 import {IMarket} from "./interfaces/IMarket.sol";
 import "./interfaces/IMedia.sol";
@@ -21,7 +21,7 @@ import "./interfaces/IMedia.sol";
  * @notice This contract provides an interface to mint media with a market
  * owned by the creator.
  */
-contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
+contract Media is IMedia, ERC721BurnableOZ, ReentrancyGuard {
     using Counters for Counters.Counter;
     using SafeMath for uint256;
 
@@ -153,7 +153,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard {
      * @notice On deployment, set the market contract address and register the
      * ERC721 metadata interface
      */
-    constructor(address marketContractAddr) public ERC721("Zora", "ZORA") {
+    constructor(address marketContractAddr,string memory _name, string memory _symbol) public ERC721OZ(_name,_symbol) {
         marketContract = marketContractAddr;
         _registerInterface(_INTERFACE_ID_ERC721_METADATA);
     }
